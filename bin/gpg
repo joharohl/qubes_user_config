@@ -1,0 +1,21 @@
+#!/bin/bash 
+
+contains() {
+    [[ " $1 " =~ " $2 " ]] && return 0 || return 1
+}
+
+PARENT_COMMAND=$(ps -o comm= $PPID)
+
+if contains "apt-key emacs" $PARENT_COMMAND; then
+  exec /usr/bin/gpg "@"
+else
+  # Not the best check ever, but it seems to work on all git verifications at least
+  if [[ $@ =~ (^|[[:space:]])"--verify"($|[[:space:]]) ]] ; then
+    export QUBES_GPG_DOMAIN="split-gpg-verify"
+  else
+    export QUBES_GPG_DOMAIN="split-gpg-sign"
+  fi
+ 
+  . /etc/profile.d/qubes-gpg.sh
+  exec qubes-gpg-client --use-agent --no-tty "$@"
+fi
