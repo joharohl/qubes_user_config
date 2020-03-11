@@ -1,0 +1,7 @@
+# Created by newuser for 5.7.1
+
+plugins=(ansible git ssh-agent)
+zstyle :omz:plugins:ssh-agent github_rsa dev_rsa
+
+
+export PATH="$HOME/.local/bin:$PATH"
