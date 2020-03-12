@@ -1,0 +1,6 @@
+[user]
+	email = johan@mullvad.net
+	name = Johan Rohlén
+	signingkey = 22DC2D2C8F7156F4DC349B3239ECCF2219FCE46F
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
