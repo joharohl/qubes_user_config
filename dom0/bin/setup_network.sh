@@ -32,7 +32,7 @@ ip=$(qvm-prefs $vm_name ip)
 gw=$(qvm-prefs $vm_name visible-gateway)
 dns="10.139.1.1"
 
-read -r -d '' config_netplan <<EOF || :
+read -r -d '' config <<EOF || :
 network:
   version: 2
   ethernets:
@@ -44,6 +44,22 @@ network:
         addresses:
           - $dns
 EOF
+
+if [[ "$ubuntu_version" == "16.04" ]]; then
+    read -r -d '' config <<EOF || :
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+      address $ip
+      netmask 255.255.255.0
+      network ${ip%.*}.0
+      broadcast ${ip%.*}.255
+      gateway $gw
+      dns-nameservers $dns
+EOF
+fi
 
 
 # Make sure the vm is started.
@@ -71,19 +87,6 @@ send_command $tty "sudo su"
 send_command $tty $password
 
 if [[ "$ubuntu_version" == "16.04" ]]; then
-    read -r -d '' config <<EOF || :
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet static
-      address $ip
-      netmask 255.255.255.0
-      network ${ip%.*}.0
-      broadcast ${ip%.*}.255
-      gateway $gw
-      dns-nameservers $dns
-EOF
     send_command $tty "echo \"$config\" > /etc/network/interfaces"
 else
     send_command $tty "echo \"$config\" > /etc/netplan/main.yaml"
