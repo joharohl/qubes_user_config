@@ -1,0 +1,21 @@
+{
+    "git.autofetch": true,
+    "cSpell.userWords": [
+        "ipmisim"
+    ],
+    "files.autoSave": "afterDelay",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.renderWhitespace": "all",
+    "shellcheck.enableQuickFix": true,
+    "shellcheck.customArgs": [
+        "-x"
+    ],
+    "todo-tree.tree.showScanModeButton": false,
+    "editor.renderIndentGuides": false,
+    "editor.rulers": [
+        100
+    ],
+    "diffEditor.ignoreTrimWhitespace": false
+}
